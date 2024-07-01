@@ -1,24 +1,30 @@
 #include <stdbool.h>
 #include <string.h>
-#include <sys/stat.h>
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
+#endif
 #include "file_utils.h"
 
-// 判断文件是否为隐藏或系统文件
 bool is_hidden_or_system_file(const char* path) {
-    const char* filename = strrchr(path, '\\');
+    const char* filename = strrchr(path, '/');
     if (!filename) {
-        filename = path; // 如果没有找到 '\\'，路径就是文件名
+        filename = strrchr(path, '\\');
+    }
+    if (!filename) {
+        filename = path;
     }
     else {
-        filename++; // 跳过 '\\'
+        filename++;
     }
 
     if (filename[0] == '.') {
-        return true; // 忽略以点号开头的隐藏文件
+        return true;
     }
 
-    // 忽略特定的系统文件
     const char* system_files[] = {
         "System32", ".svn", ".ssh", ".gitconfig", NULL
     };
@@ -30,21 +36,22 @@ bool is_hidden_or_system_file(const char* path) {
     return false;
 }
 
-// 判断路径是否为隐藏或系统目录
 bool is_hidden_or_system_dir(const char* path) {
-    const char* dirname = strrchr(path, '\\');
+    const char* dirname = strrchr(path, '/');
     if (!dirname) {
-        dirname = path; // 如果没有找到 '\\'，路径就是目录名
+        dirname = strrchr(path, '\\');
+    }
+    if (!dirname) {
+        dirname = path;
     }
     else {
-        dirname++; // 跳过 '\\'
+        dirname++;
     }
 
     if (dirname[0] == '.') {
-        return true; // 忽略以点号开头的隐藏目录
+        return true;
     }
 
-    // 忽略特定的系统目录
     const char* system_dirs[] = {
         "System32", ".svn", ".ssh", ".gitconfig", NULL
     };
@@ -56,11 +63,18 @@ bool is_hidden_or_system_dir(const char* path) {
     return false;
 }
 
-// 判断路径是否为目录
 bool is_directory(const char* path) {
+#ifdef _WIN32
     DWORD attr = GetFileAttributesA(path);
     if (attr == INVALID_FILE_ATTRIBUTES) {
         return false;
     }
     return (attr & FILE_ATTRIBUTE_DIRECTORY) != 0;
+#else
+    struct stat st;
+    if (stat(path, &st) != 0) {
+        return false;
+    }
+    return S_ISDIR(st.st_mode);
+#endif
 }

@@ -3,10 +3,9 @@
 
 #include <stdio.h>
 
-// 处理文件函数声明
-void process_file(const char* input_file, const char* output_file, const char* new_line_ending, FILE* report);
+#define MAX_PATH_LENGTH 1024  // 定义路径最大长度
 
-// 处理目录函数声明
+void process_file(const char* input_file, const char* output_file, const char* new_line_ending, FILE* report);
 void process_directory(const char* input_dir, const char* output_dir, const char* new_line_ending, FILE* report);
 
 #endif // FILE_PROCESSOR_H
