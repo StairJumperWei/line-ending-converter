@@ -4,7 +4,7 @@
 #include "arg_parser.h"
 #include "line_ending_converter.h"
 
-// ½âÎöÃüÁîĞĞ²ÎÊı
+// è§£æå‘½ä»¤è¡Œå‚æ•°
 void parse_arguments(int argc, char* argv[], char** input_path, char** output_path, const char** new_line_ending) {
     if (argc != 4) {
         fprintf(stderr, "Usage: %s <input_path> <output_path> <system>\n", argv[0]);
