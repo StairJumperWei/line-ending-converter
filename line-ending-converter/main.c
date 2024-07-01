@@ -4,6 +4,33 @@
 
 #define BUFFER_SIZE 1024
 
+// 判断文件是否为隐藏文件或在系统目录中
+int is_hidden_or_system_file(const char* path) {
+    const char* filename = strrchr(path, '/');
+    if (!filename) {
+        filename = path;
+    }
+    else {
+        filename++;
+    }
+
+    // 忽略隐藏文件和目录（以点号开头）
+    if (filename[0] == '.') {
+        return 1;
+    }
+
+    // 忽略特定的系统目录和文件
+    const char* system_dirs[] = {
+        "System32", ".svn", ".ssh", ".gitconfig", NULL
+    };
+    for (int i = 0; system_dirs[i] != NULL; ++i) {
+        if (strcmp(filename, system_dirs[i]) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 // 转化换行符为指定系统的换行符
 void convert_line_endings(FILE* src, FILE* dst, const char* new_line_ending) {
     char buffer[BUFFER_SIZE];
@@ -11,8 +38,8 @@ void convert_line_endings(FILE* src, FILE* dst, const char* new_line_ending) {
 
     while (fgets(buffer, BUFFER_SIZE, src)) {
         for (char* p = buffer; *p; ++p) {
-            if (*p == '\r') {  // 检查是否为 '\r'
-                if (*(p + 1) == '\n') {  // 检查是否为 '\r\n'
+            if (*p == '\r') {
+                if (*(p + 1) == '\n') {
                     fputs(new_line_ending, dst);
                     ++p; // 跳过 '\n' 后的 '\r'
                 }
@@ -20,24 +47,30 @@ void convert_line_endings(FILE* src, FILE* dst, const char* new_line_ending) {
                     fputs(new_line_ending, dst);
                 }
             }
-            else if (*p == '\n') {  // 检查是否为 '\n'
+            else if (*p == '\n') {
                 fputs(new_line_ending, dst);
             }
-            else {  // 其他字符直接写入目标文件
+            else {
                 fputc(*p, dst);
             }
         }
     }
 }
 
-// 处理文件，将其换行符转换为指定的格式
+// 处理文件，将其行结尾转换为指定的格式
 void process_file(const char* input_file, const char* output_file, const char* new_line_ending) {
+    if (is_hidden_or_system_file(input_file)) {
+        printf("Skipping hidden or system file: %s\n", input_file);
+        return;
+    }
+
     FILE* src = fopen(input_file, "rb");
-    FILE* dst = fopen(output_file, "wb");
     if (!src) {
         perror("Failed to open input file");
         exit(EXIT_FAILURE);
     }
+
+    FILE* dst = fopen(output_file, "wb");
     if (!dst) {
         perror("Failed to open output file");
         fclose(src);
@@ -81,8 +114,8 @@ int main(int argc, char* argv[]) {
     char* output_file;
     char* new_line_ending;
 
-    parse_arguments(argc, argv, &input_file, &output_file, &new_line_ending);  // 解析命令行参数
-    process_file(input_file, output_file, new_line_ending);  // 处理文件
+    parse_arguments(argc, argv, &input_file, &output_file, &new_line_ending);
+    process_file(input_file, output_file, new_line_ending);
 
     return 0;
 }
