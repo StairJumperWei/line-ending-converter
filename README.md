@@ -17,9 +17,61 @@
   · 编译并运行项目
   
 - 2.在Linux上编译和运行
+
+```Bash
+sudo apt update
+sudo apt install build-essential
+cd /path/to/line-ending-converter
+gcc -o line-ending-converter main.c file_utils.c line_ending_converter.c file_processor.c arg_parser.c -lm
+./line-ending-converter <input_path> <output_path> <system>
+```
+## 使用方法
+```Bash
+line-ending-converter <input_path> <output_path> <system>
+```
+- <input_path>: 输入文件或目录的路径。
+- <output_path>: 输出文件或目录的路径。
+- <system>: 要转换的系统换行符类型，可选值为 Windows, Linux, macOS。
 ***
 # 软件结构图
-![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/466887e1-733b-44e0-b3d2-8f954118f2cb)
+```Diff
++--------------------------------------------------+
+|                     main.c                       |
+|  - 主函数 main                                    |
+|  - 解析命令行参数，调用处理函数                     |
++--------------------------------------------------+
+                      |
+                      v
++--------------------------------------------------+
+|                   arg_parser.h/c                 |
+|  - parse_arguments                               |
+|  - 解析命令行参数，获取输入、输出路径和换行符        |
++--------------------------------------------------+
+                      |
+                      v
++--------------------------------------------------+
+|                   file_utils.h/c                 |
+|  - is_hidden_or_system_file                      |
+|  - is_hidden_or_system_dir                       |
+|  - is_directory                                  |
+|  - 判断文件或目录类型                              |
++--------------------------------------------------+
+                      |
+                      v
++--------------------------------------------------+
+|           line_ending_converter.h/c              |
+|  - convert_line_endings                          |
+|  - 转换文件中的换行符                              |
++--------------------------------------------------+
+                      |
+                      v
++--------------------------------------------------+
+|                 file_processor.c                 |
+|  - process_file                                  |
+|  - process_directory                             |
+|  - 处理文件和目录，调用转换函数                     |
++--------------------------------------------------+
+```
 ***
 # 软件流程图
 ![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/37497064-4c33-45cb-b312-648908f43438)
