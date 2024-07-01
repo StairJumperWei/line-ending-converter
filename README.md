@@ -1,8 +1,8 @@
 ## Windows、Linux、MacOS三个系统中，文本的换行符格式不同。编写一个换行符格式转换工具，实现三个系统间的换行符格式的转换。
 
-**Usage:** _.\line_ending_converter.exe <input_file> <output_flie> <system>_
+**Usage:** .\line_ending_converter.exe <input_file> <output_flie> < system >
 
-**system option:** _Windows, Linux, macOS_
+**system option:** Windows, Linux, macOS
 
 
 # arg_parser.h / arg_parser.c
