@@ -1,9 +1,33 @@
-# line-ending-converter
-Windows、Linux、MacOS三个系统中，文本的换行符格式不同。编写一个换行符格式转换工具，实现三个系统间的换行符格式的转换。
+## Windows、Linux、MacOS三个系统中，文本的换行符格式不同。编写一个换行符格式转换工具，实现三个系统间的换行符格式的转换。
 
-Usage: .\line_ending_converter.exe <input_file> <output_flie> <system>
+**Usage:** _.\line_ending_converter.exe <input_file> <output_flie> <system>_
 
-system option: Windows, Linux, macOS
+**system option:** _Windows, Linux, macOS_
+
+
+# arg_parser.h / arg_parser.c
+**作用：** 解析命令行参数。
+
+**具体实现：** 提供了 parse_arguments 函数，用于解析命令行传入的参数，包括输入路径、输出路径以及新的行结束符类型（Windows 或 Unix[Linux\macOS]）。
+
+# file_utils.h / file_utils.c
+**作用：** 提供文件和目录相关的实用函数。
+
+**具体实现：** 包括判断文件是否为隐藏或系统文件 (is_hidden_or_system_file)，判断路径是否为隐藏或系统目录 (is_hidden_or_system_dir)，以及判断路径是否为目录 (is_directory)。
+
+# line_ending_converter.h / line_ending_converter.c
+**作用：** 提供行结束符转换功能。
+
+**具体实现：** 定义了 Windows 和 Unix 的行结束符常量，并提供了 convert_line_endings 函数，用于将源文件中的行结束符转换为指定的新行结束符类型。
+
+# file_processor.h / file_processor.c
+**作用：** 处理文件和目录的转换任务。
+
+**具体实现：** 包括处理单个文件的转换 (process_file) 和处理整个目录的递归转换 (process_directory)。
+
+# main.c
+**作用：** 程序的入口点，调用其他模块完成整体文件和目录的转换工作。
+
 
 - [x] 使用C语言编写应用程序，实现Windows、Linux、MacOS系统间的换行符格式转换。
 - [x] 除换行符格式外，原文件中的文件内容不能改变。
