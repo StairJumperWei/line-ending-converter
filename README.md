@@ -38,7 +38,7 @@ line-ending-converter <input_path> <output_path> <system>
 +--------------------------------------------------+
 |                     main.c                       |
 |  - 主函数 main                                    |
-|  - 解析命令行参数，调用处理函数                     |
+|  - 调用处理函数                                   |
 +--------------------------------------------------+
                       |
                       v
@@ -69,7 +69,7 @@ line-ending-converter <input_path> <output_path> <system>
 |                 file_processor.c                 |
 |  - process_file                                  |
 |  - process_directory                             |
-|  - 处理文件和目录，调用转换函数                     |
+|  - 处理文件和目录，生成报告文件                     |
 +--------------------------------------------------+
 ```
 ***
