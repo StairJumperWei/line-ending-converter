@@ -38,9 +38,9 @@ void process_file(const char* input_file, const char* output_file, const char* n
     double start_time = current_time_ms();
     char original_line_ending[10] = "";
 
-    // 如果是隐藏或系统文件，则跳过
-    if (is_hidden_or_system_file(input_file)) {
-        fprintf(report, "\"%s\",\"%s\",\"N/A\",\"N/A\",\"Skipped (hidden/system file)\",\"0.0000\"\n", input_file, output_file);
+    // 如果是隐藏或系统文件或者非纯文本文件，则跳过
+    if (is_hidden_or_system_file(input_file) || !is_text_file(input_file)) {
+        fprintf(report, "\"%s\",\"%s\",\"N/A\",\"N/A\",\"Skipped (hidden/system file/not text file)\",\"0.0000\"\n", input_file, output_file);
         return;
     }
 
@@ -124,7 +124,7 @@ void process_directory(const char* input_dir, const char* output_dir, const char
         }
 
         if (is_hidden_or_system_dir(input_path)) {
-            fprintf(report, "\"%s\",\"%s\",\"N/A\",\"N/A\",\"Skipped (hidden/system directory)\",\"0.0000\"\n", input_path, output_path);
+            fprintf(report, "\"%s\",\"%s\",\"N/A\",\"N/A\",\"Skipped (hidden/system directory/not text file)\",\"0.0000\"\n", input_path, output_path);
             continue;
         }
 
@@ -156,8 +156,8 @@ void process_directory(const char* input_dir, const char* output_dir, const char
             continue;
         }
 
-        if (is_hidden_or_system_dir(input_path)) {
-            fprintf(report, "\"%s\",\"%s\",\"N/A\",\"N/A\",\"Skipped (hidden/system directory)\",\"0.0000\"\n", input_path, output_path);
+        if (is_hidden_or_system_dir(input_path) || !is_text_file(input_file)) {
+            fprintf(report, "\"%s\",\"%s\",\"N/A\",\"N/A\",\"Skipped (hidden/system directory/not text file)\",\"0.0000\"\n", input_path, output_path);
             continue;
         }
 

@@ -1,13 +1,18 @@
 #include <stdbool.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "file_utils.h"
+#include <locale.h>
+#include <wchar.h>
+#include <ctype.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #else
-#include <sys/stat.h>
 #include <dirent.h>
-#include <unistd.h>
 #endif
-#include "file_utils.h"
 
 bool is_hidden_or_system_file(const char* path) {
     const char* filename = strrchr(path, '/');
@@ -77,4 +82,33 @@ bool is_directory(const char* path) {
     }
     return S_ISDIR(st.st_mode);
 #endif
+}
+
+bool is_text_file(const char* path) {
+    setlocale(LC_ALL, "en_US.UTF-8");
+
+    FILE* file = fopen(path, "rb");
+    if (!file) {
+        return false;
+    }
+
+    int c;
+    bool is_text = true;
+
+    while ((c = fgetc(file)) != EOF) {
+        // Check for control characters excluding common ones like '\n', '\r', '\t'
+        if ((c < 32 && c != '\n' && c != '\r' && c != '\t') || c == 127) {
+            is_text = false;
+            break;
+        }
+
+        // Check if the character is a valid printable ASCII character
+        if (c < 128 && !isprint(c) && c != '\n' && c != '\r' && c != '\t') {
+            is_text = false;
+            break;
+        }
+    }
+
+    fclose(file);
+    return is_text;
 }
