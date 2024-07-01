@@ -6,10 +6,10 @@
 
 ***
 # 软件结构图
-
 ![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/466887e1-733b-44e0-b3d2-8f954118f2cb)
-
-
+***
+# 软件流程图
+![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/37497064-4c33-45cb-b312-648908f43438)
 ***
 
 - [x] 使用C语言编写应用程序，实现Windows、Linux、MacOS系统间的换行符格式转换。
