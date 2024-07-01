@@ -1,6 +1,10 @@
 #ifndef FILE_UTILS_H
 #define FILE_UTILS_H
 
-int is_hidden_or_system_file(const char* path);
+#include <stdbool.h>
+
+bool is_hidden_or_system_file(const char* path);
+bool is_hidden_or_system_dir(const char* path);
+bool is_directory(const char* path);
 
 #endif // FILE_UTILS_H

@@ -1,12 +1,8 @@
 #ifndef LINE_ENDING_CONVERTER_H
 #define LINE_ENDING_CONVERTER_H
 
-#include <stdio.h>
-
-#define BUFFER_SIZE 1024
-
-extern const char* WINDOWS_EOL;
-extern const char* UNIX_EOL;
+#define WINDOWS_EOL "\r\n"
+#define UNIX_EOL "\n"
 
 void convert_line_endings(FILE* src, FILE* dst, const char* new_line_ending);
 
