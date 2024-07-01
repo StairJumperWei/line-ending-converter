@@ -18,5 +18,25 @@
     <ClCompile Include="main.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="arg_parser.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="file_utils.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="line_ending_converter.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="arg_parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="file_utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="line_ending_converter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
