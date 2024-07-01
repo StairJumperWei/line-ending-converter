@@ -4,23 +4,21 @@
 #include <windows.h>
 #include "file_utils.h"
 
-// 判断文件是否为隐藏文件或系统文件
+// 判断文件是否为隐藏或系统文件
 bool is_hidden_or_system_file(const char* path) {
-    // 获取文件名
     const char* filename = strrchr(path, '\\');
     if (!filename) {
-        filename = path; // 没有找到 '\\'，路径就是文件名
+        filename = path; // 如果没有找到 '\\'，路径就是文件名
     }
     else {
         filename++; // 跳过 '\\'
     }
 
-    // 忽略隐藏文件和目录（以点号开头）
     if (filename[0] == '.') {
-        return true;
+        return true; // 忽略以点号开头的隐藏文件
     }
 
-    // 忽略特定的系统目录和文件
+    // 忽略特定的系统文件
     const char* system_files[] = {
         "System32", ".svn", ".ssh", ".gitconfig", NULL
     };
@@ -34,18 +32,16 @@ bool is_hidden_or_system_file(const char* path) {
 
 // 判断路径是否为隐藏或系统目录
 bool is_hidden_or_system_dir(const char* path) {
-    // 获取目录名
     const char* dirname = strrchr(path, '\\');
     if (!dirname) {
-        dirname = path; // 没有找到 '\\'，路径就是目录名
+        dirname = path; // 如果没有找到 '\\'，路径就是目录名
     }
     else {
         dirname++; // 跳过 '\\'
     }
 
-    // 忽略隐藏目录（以点号开头）
     if (dirname[0] == '.') {
-        return true;
+        return true; // 忽略以点号开头的隐藏目录
     }
 
     // 忽略特定的系统目录
