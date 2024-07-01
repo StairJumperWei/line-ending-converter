@@ -9,6 +9,7 @@
 #endif
 #include "arg_parser.h"
 #include "file_processor.h"
+#include "file_utils.h"
 
 int main(int argc, char* argv[]) {
     char* input_path;
