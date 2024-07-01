@@ -156,7 +156,7 @@ void process_directory(const char* input_dir, const char* output_dir, const char
             continue;
         }
 
-        if (is_hidden_or_system_dir(input_path) || !is_text_file(input_file)) {
+        if (is_hidden_or_system_dir(input_path) || !is_text_file(input_path)) {
             fprintf(report, "\"%s\",\"%s\",\"N/A\",\"N/A\",\"Skipped (hidden/system directory/not text file)\",\"0.0000\"\n", input_path, output_path);
             continue;
         }
