@@ -128,14 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="arg_parser.c" />
-    <ClCompile Include="file_processor.c" />
     <ClCompile Include="file_utils.c" />
     <ClCompile Include="line_ending_converter.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arg_parser.h" />
-    <ClInclude Include="file_processor.h" />
     <ClInclude Include="file_utils.h" />
     <ClInclude Include="line_ending_converter.h" />
   </ItemGroup>
