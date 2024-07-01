@@ -1,9 +1,22 @@
-## Windows、Linux、MacOS三个系统中，文本的换行符格式不同。编写一个换行符格式转换工具，实现三个系统间的换行符格式的转换。
-
-**Usage:** .\line_ending_converter.exe <input_file> <output_flie> < system >
-
-**system option:** Windows, Linux, macOS
-
+# 使用说明
+## 功能介绍
+- 支持在不同操作系统上运行。
+- 可将文件或目录中的文本文件的换行符统一转换为指定的系统所用的格式，如Windows（CRLF）、Linux（LF）、macOS(LF)。
+- 支持跳过隐藏文件/文件夹或系统文件/文件夹。
+- 生成详细的转换报告，包括每个文件转换前后的路径、转换状态、耗时等信息。
+## 系统要求
+- **操作系统：** Windows,Linux,macOS
+- **编译器：** gcc,Visual Studio
+## 编译及运行
+- 1.在Windows上编译和运行
+  
+  · 使用Visual Studio创建新的C语言项目
+  
+  · 将所有文件添加到项目中
+  
+  · 编译并运行项目
+  
+- 2.在Linux上编译和运行
 ***
 # 软件结构图
 ![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/466887e1-733b-44e0-b3d2-8f954118f2cb)
