@@ -19,11 +19,11 @@
 - 2.在Linux上编译和运行
 
 ```Bash
-sudo apt update
-sudo apt install build-essential
-cd /path/to/line-ending-converter
-gcc -o line-ending-converter main.c file_utils.c line_ending_converter.c file_processor.c arg_parser.c -lm
-./line-ending-converter <input_path> <output_path> <system>
+$ sudo apt update
+$ sudo apt install build-essential
+$ cd /path/to/line-ending-converter
+$ gcc -o line-ending-converter main.c file_utils.c line_ending_converter.c file_processor.c arg_parser.c -lm
+$ ./line-ending-converter <input_path> <output_path> <system>
 ```
 ## 使用方法
 ```Bash
@@ -76,7 +76,76 @@ line-ending-converter <input_path> <output_path> <system>
 # 软件流程图
 ![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/37497064-4c33-45cb-b312-648908f43438)
 ***
+# 测试报告
+## 测试环境
+- **测试系统：** Windows11，Ubuntu24.04
+- **编译器：** Visual Studio 2022，GCC 11
+## 测试用文件树状图
+```Diff
+input
+├─.git
+│      Setup.exe
+│      SetupEngine.dll
+│      SetupUi.dll
+│
+├─.ssh
+│      Setup.exe
+│      SetupEngine.dll
+│      SetupUi.dll
+│
+├─Music
+│      My Song.mp3
+│
+├─Picture
+│      My Pet.jpg
+│
+├─System32
+│      input.txt
+│      input_Linux.txt
+│      long_text.txt
+│
+├─Texture
+│  │  .abc
+│  │  input.txt
+│  │  input_Linux.txt
+│  │  long_text.txt
+│  │
+│  └─C Project
+│          .git
+│          Hello World.c
+│
+└─Video
+        My Vlog.mp4
+```
+## 测试结果
+- 1.不输入参数
+![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/6b858365-a5bd-43a6-90f1-107393d3da4f)
+- 2.参数输入错误（路径名错误、系统名错误）
+![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/9d048a4f-203e-4ca2-9ea2-61cdba2ace32)
+![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/9d0a09d3-9b8c-4aaa-9ffe-db5421ef69e8)
+- 3.正常运行
 
+生成的文件树状图
+```Diff
+output
+├─Music
+├─Picture
+├─Texture
+│  │  input.txt
+│  │  input_Linux.txt
+│  │  long_text.txt
+│  │
+│  └─C Project
+│          Hello World.c
+│
+└─Video
+```
+**生成的报告文件：**
+![image](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/30600de0-fd9e-4135-86b5-0e21a0328608)
+
+**转换结果：**
+![屏幕截图 2024-07-02 021648](https://github.com/StairJumperWei/line-ending-converter/assets/42022174/e5e7a545-28ca-4045-9af9-94291fc0f421)
+***
 - [x] 使用C语言编写应用程序，实现Windows、Linux、MacOS系统间的换行符格式转换。
 - [x] 除换行符格式外，原文件中的文件内容不能改变。
 - [x] 支持的文件格式包括.txt、.c、.cpp、.h、.hpp、Makefile、.log等纯文本格式。
