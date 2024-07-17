@@ -4,15 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "file_utils.h"
-#include <locale.h>
-#include <wchar.h>
-#include <ctype.h>
-
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <dirent.h>
-#endif
+#include "platform_utils.h"
 
 // 判断文件是否为隐藏文件或系统文件
 bool is_hidden_or_system_file(const char* path) {
@@ -74,26 +66,8 @@ bool is_hidden_or_system_dir(const char* path) {
     return false;
 }
 
-// 判断路径是否为目录
-bool is_directory(const char* path) {
-#ifdef _WIN32
-    DWORD attr = GetFileAttributesA(path);
-    if (attr == INVALID_FILE_ATTRIBUTES) {
-        return false;
-    }
-    return (attr & FILE_ATTRIBUTE_DIRECTORY) != 0;
-#else
-    struct stat st;
-    if (stat(path, &st) != 0) {
-        return false;
-    }
-    return S_ISDIR(st.st_mode);
-#endif
-}
-
 // 判断文件是否为纯文本文件
 bool is_text_file(const char* path) {
-    setlocale(LC_ALL, "en_US.UTF-8");
 
     FILE* file = fopen(path, "rb");
     if (!file) {

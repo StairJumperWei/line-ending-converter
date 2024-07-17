@@ -1,15 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef _WIN32
-#include <direct.h>
-#else
-#include <sys/stat.h>
-#include <unistd.h>
-#endif
 #include "arg_parser.h"
 #include "file_processor.h"
 #include "file_utils.h"
+#include "platform_utils.h"
 
 int main(int argc, char* argv[]) {
     char* input_path;
@@ -30,12 +25,9 @@ int main(int argc, char* argv[]) {
     fprintf(report, "\"Input File\",\"Output File\",\"Original EOL\",\"New EOL\",\"Status\",\"Duration (ms)\"\n");
 
     // 判断输入路径是目录还是文件
-    if (is_directory(input_path)) {
-#ifdef _WIN32
-        _mkdir(output_path);  // 创建输出目录（Windows）
-#else
-        mkdir(output_path, 0755);  // 创建输出目录（POSIX）
-#endif
+    int status = is_directory(input_path);
+    if (status) {
+        create_directory(output_path);
         // 处理目录
         process_directory(input_path, output_path, new_line_ending, report);
     }
