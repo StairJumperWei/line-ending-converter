@@ -112,7 +112,7 @@ void process_directory(const char* input_dir, const char* output_dir, const char
 
         if (entry->d_type == DT_DIR) {
             create_directory(output_path);
-            process_directory_platform(input_path, output_path, new_line_ending, report);
+            process_directory(input_path, output_path, new_line_ending, report);
         }
         else {
             process_file(input_path, output_path, new_line_ending, report);
